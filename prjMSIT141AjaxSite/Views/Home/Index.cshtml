@@ -6,3 +6,48 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+<input type="button" value="click" id="btn"/>
+<div class="divtable">
+    <table class="table">
+    </table>
+</div>
+
+@section Styles{ 
+<style>
+    .h1{
+        background-color:lightblue;
+    }
+</style>
+}
+
+@section Scripts{ 
+<script>
+    const table = $(".table");
+
+    $("#btn").click(function () {
+        //console.log("Hello");        
+        //$(".display-4").text("Welcome MVC !!").addClass("h1");
+        var emp = {
+            "employees": [
+                { "name": "Tom", "workYears": 3, "salary": 35000 },
+                { "name": "Jack", "workYears": 5, "salary": 40000 },
+                { "name": "Mary", "workYears": 7, "salary": 45000 }
+            ]
+        };
+
+        //emp.employees.forEach(function (data) {
+        //    // 解構賦值 Destructuring assignment
+        //    const { name, workYears, salary } = data;
+        //    console.log(name);
+        //    console.log(workYears);
+        //    console.log(salary);
+      //)}
+
+        $.each(emp.employees, function (idx, employee) {
+            const { name, workYears, salary } = employee;
+            table.append(`<tr><td>${name}</td><td>${workYears}</td><td>${salary}</td></tr>`);
+        })        
+    })
+    
+</script>
+}
