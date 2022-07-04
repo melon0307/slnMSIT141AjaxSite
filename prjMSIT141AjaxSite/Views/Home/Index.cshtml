@@ -6,7 +6,8 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
-<input type="button" value="click" id="btn"/>
+<input type="button" value="JavaScrip"t id="btn1"/>
+<input type="button" value="JQuery" id="btn2" />
 <div class="divtable">
     <table class="table">
     </table>
@@ -24,7 +25,45 @@
 <script>
     const table = $(".table");
 
-    $("#btn").click(function () {
+    // JavaScript
+    const btn = document.querySelector("#btn1");
+    btn.addEventListener("click", () => {
+        var emp = {
+            "employees": [
+                { "name": "Tom", "workYears": 3, "salary": 35000 },
+                { "name": "Jack", "workYears": 5, "salary": 40000 },
+                { "name": "Mary", "workYears": 7, "salary": 45000 }
+            ]
+        };
+
+        const tb = document.querySelector(".table");
+        let docFrag = document.createDocumentFragment();
+        tb.innerHTML = "";
+        emp.employees.forEach(employee => {
+            const { name, workYears, salary } = employee;
+
+            const cell1 = document.createElement("td");
+            const txt1 = document.createElement(name);
+            cell1.appendChild(txt1);
+            const cell2 = document.createElement("td");
+            const txt2 = document.createElement(workYears);
+            cell1.appendChild(txt1);
+            const cell3 = document.createElement("td");
+            const txt3 = document.createElement(salary);
+            cell1.appendChild(txt1);
+
+            const row = document.createElement("tr");
+            row.appendChild(cell1);
+            row.appendChild(cell2);
+            row.appendChild(cell3);
+
+            docFrag.appendChild(row);
+        })
+        tb.appendChild(docFrag);
+    })
+
+    // JQuery
+    $("#btn2").click(function () {
         //console.log("Hello");        
         //$(".display-4").text("Welcome MVC !!").addClass("h1");
         var emp = {
@@ -43,10 +82,17 @@
         //    console.log(salary);
       //)}
 
+        let docFrag = $(document.createDocumentFragment());
         $.each(emp.employees, function (idx, employee) {
             const { name, workYears, salary } = employee;
-            table.append(`<tr><td>${name}</td><td>${workYears}</td><td>${salary}</td></tr>`);
-        })        
+
+            const cell1 = $("<td></td>").text(name);
+            const cell2 = $("<td></td>").text(workYears);
+            const cell3 = $("<td></td>").text(salary);
+            const row = $("<tr></tr>").append([cell1, cell2, cell3]);
+            docFrag.append(row);            
+        })
+        table.html(docFrag);
     })
     
 </script>
