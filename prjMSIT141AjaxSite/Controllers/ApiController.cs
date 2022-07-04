@@ -8,9 +8,13 @@ namespace prjMSIT141AjaxSite.Controllers
 {
     public class ApiController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(string name, int age = 0)
         {
-            return Content("AJax, 你好","text/plain",System.Text.Encoding.UTF8);
+            if (string.IsNullOrEmpty(name))
+            {
+                name = "Ajax";
+            }
+            return Content($"{name}你好, 你的年齡是{age}。");
         }
     }
 }

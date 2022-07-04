@@ -3,13 +3,23 @@
 }
 
 <h1>FirstAjax</h1>
+<span>Name</span>
+<br />
+<input type="text" id="txtname" />
+<br />
+<span>Age</span>
+<br />
+<input type="number" id="txtage" />
 <button type="button" class="btn btn-primary mb-3" id="buttonStart">Ajax Start</button>
 <div id="div1" class="alert alert-secondary"></div>
+
 
 @section Scripts{
     <script>
         const btnStart = document.querySelector('#buttonStart');
         const divInfo = document.querySelector('#div1');
+        const textname = document.querySelector("#txtname");
+        const textage = document.querySelector("#txtage");
 
         btnStart.addEventListener('click', () => {
             // 步驟一建立Ajax物件
@@ -26,8 +36,14 @@
             })
 
             // 步驟二對伺服器端發出要求(Request)
-            xhr.open("GET", "/Api/index"); // 就像是開啟瀏覽器輸入網址
-            xhr.send(); // 按下Enter鍵才會真的去執行 
-            })        
+            //xhr.open("GET", "/Api/index?name=Jack&age=50"); // 就像是開啟瀏覽器輸入網址
+            const url = "@Url.Content("~/Api/Index")",
+                paras = `?name=${txtname.value}&age=${txtage.value}`;
+            
+            //xhr.open("GET", `/Api/index?name=${txtname.value}&age=${txtage.value}`);
+            //xhr.send(); // 按下Enter鍵才會真的去執行
+            xhr.open("GET", url + paras);
+            xhr.send();
+        })
     </script>
 }
