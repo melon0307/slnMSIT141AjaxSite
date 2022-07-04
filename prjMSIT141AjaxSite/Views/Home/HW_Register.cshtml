@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewData["Title"] = "HW_Register";
+}
+
+<h1>HW_Register</h1>
+<form method="post" enctype="application/x-www-form-urlencoded" name="userInfo">
+    <div class="form-group">
+        <label for="txtemail">Name</label>
+        <input type="text" class="form-control col-md-3" id="txtname" name="name">
+        <small id="nameHelp" class="form-text text-muted"></small>
+    </div>
+    <div class="form-group">
+        <label for="txtpassword">Email</label>
+        <input type="email" class="form-control col-md-6" id="txtemail" name="email" aria-describedby="emailHelp">
+    </div>
+    <div class="form-group">
+        <label for="txtage">Age</label>
+        <input type="number" class="form-control col-md-3" id="txtage" name="age">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <hr />
+    <div id="div1" class="alert alert-secondary">
+    </div>
+</form>
+@section Scripts{
+    <script>
+        const txtName = document.querySelector("#txtname"),
+              divInfo = document.querySelector("#div1"),
+              label = document.querySelector("#nameHelp");
+
+        txtName.addEventListener("blur", () => {
+            const formData = new FormData(document.userInfo),
+                  xhr = new XMLHttpRequest();
+
+            xhr.addEventListener("load", () => {
+                const data = xhr.responseText;
+
+                if (data == "True") {      
+                    if (txtName.value.trim() == "")
+                        label.innerHTML = "請輸入姓名!";
+                    else
+                        label.innerHTML = "恭喜你，此姓名可以使用!";
+                }
+                else
+                    label.innerHTML = "此姓名已被註冊!";                                   
+            })
+            
+            xhr.open("POST",'@Url.Content("~/Api/Register")');            
+            xhr.send(formData);
+        })
+
+    </script>
+}
+

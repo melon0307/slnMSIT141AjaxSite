@@ -44,7 +44,7 @@ namespace prjMSIT141AjaxSite.Controllers
             return View();
         }
 
-        public IActionResult Register()
+        public IActionResult HW_Register()
         {
             return View();
         }
