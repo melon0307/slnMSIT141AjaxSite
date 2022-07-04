@@ -10,6 +10,7 @@ namespace prjMSIT141AjaxSite.Controllers
     {
         public IActionResult Index(string name, int age = 0)
         {
+            System.Threading.Thread.Sleep(5000);
             if (string.IsNullOrEmpty(name))
             {
                 name = "Ajax";

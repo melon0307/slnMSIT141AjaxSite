@@ -11,20 +11,26 @@
 <br />
 <input type="number" id="txtage" />
 <button type="button" class="btn btn-primary mb-3" id="buttonStart">Ajax Start</button>
+<button type="button" class="btn btn-primary mb-3" id="buttonStop">Ajax Stop</button>
 <div id="div1" class="alert alert-secondary"></div>
 
 
 @section Scripts{
     <script>
         const btnStart = document.querySelector('#buttonStart');
+        const btnStop = document.querySelector('#buttonStop');
         const divInfo = document.querySelector('#div1');
         const textname = document.querySelector("#txtname");
         const textage = document.querySelector("#txtage");
 
-        btnStart.addEventListener('click', () => {
-            // 步驟一建立Ajax物件
-            let xhr = new XMLHttpRequest();
+        // 步驟一建立Ajax物件
+        const xhr = new XMLHttpRequest();
 
+        btnStop.addEventListener('click', () => {
+            xhr.abort();
+        })
+
+        btnStart.addEventListener('click', () => { 
             // 步驟三在load事件中接收資料
             // 當伺服器回傳結果完成後就會觸發load事件
             xhr.addEventListener("load", () => {
@@ -35,15 +41,39 @@
                 divInfo.innerHTML = `<h2>${data}</h2>`;
             })
 
+            xhr.addEventListener("loadstart", () => {
+                console.log("loadstart");
+                btnStart.textContent = "Loading...";
+                btnStart.setAttribute("disabled", "disabled");
+            })
+
+            xhr.addEventListener("loadend", () => {
+                console.log("loadend");
+                btnStart.removeAttribute("disabled");
+                btnStart.textContent = "Ajax Start";
+            })
+
+            xhr.addEventListener("timeout", () => {
+                console.log("timeout");
+                divInfo.innerHTML = "<h3>伺服器忙碌中...</h3>";
+            })
+
+            xhr.addEventListener("abort", () => {
+                console.log("abort");
+                divInfo.innerHTML = "<h3>您終止了程式的執行</h3>";
+            })
+
             // 步驟二對伺服器端發出要求(Request)
             //xhr.open("GET", "/Api/index?name=Jack&age=50"); // 就像是開啟瀏覽器輸入網址
             const url = "@Url.Content("~/Api/Index")",
                 paras = `?name=${txtname.value}&age=${txtage.value}`;
             
             //xhr.open("GET", `/Api/index?name=${txtname.value}&age=${txtage.value}`);
-            //xhr.send(); // 按下Enter鍵才會真的去執行
+            //xhr.send(); 
+
             xhr.open("GET", url + paras);
-            xhr.send();
+            xhr.timeout = 3000; // 3秒鐘伺服器沒有回傳結果就終止程式的執行
+            xhr.send(); // 按下Enter鍵才會真的去執行
         })
     </script>
 }
