@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using prjMSIT141AjaxSite.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +9,14 @@ namespace prjMSIT141AjaxSite.Controllers
 {
     public class ApiController : Controller
     {
-        public IActionResult Index(string name, int age = 0)
+        public IActionResult Index(CUser user)
         {
-            System.Threading.Thread.Sleep(5000);
-            if (string.IsNullOrEmpty(name))
+            //System.Threading.Thread.Sleep(5000); //程式停止5秒
+            if (string.IsNullOrEmpty(user.name))
             {
-                name = "Ajax";
+                user.name = "Ajax";
             }
-            return Content($"{name}你好, 你的年齡是{age}。");
+            return Content($"{user.name}你好, 你的年齡是{user.age}。");
         }
     }
 }

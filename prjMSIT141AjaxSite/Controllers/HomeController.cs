@@ -38,5 +38,10 @@ namespace prjMSIT141AjaxSite.Controllers
         {
             return View();
         }
+
+        public IActionResult AjaxPost()
+        {
+            return View();
+        }
     }
 }
