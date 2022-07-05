@@ -64,5 +64,10 @@ namespace prjMSIT141AjaxSite.Controllers
 
             return View();
         }
+
+        public IActionResult Fetch()
+        {
+            return View();
+        }
     }
 }
