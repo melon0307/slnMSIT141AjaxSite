@@ -27,7 +27,10 @@
     <div id="div1" class="alert alert-secondary">
     </div>
 </form>
+
+
 @section Scripts{
+    
     <script>
         const btnSubmit = document.querySelector('.btn'),
               divInfo = document.querySelector('#div1'),
@@ -37,23 +40,28 @@
         event.preventDefault(); // 停止預設行為 submit link
         const formData = new FormData(document.userInfo);
 
+        // 透過fetch()上傳圖檔
+        fetch('@Url.Content("~/api/Register")', {
+            method:'POST',
+            body:formData
+        })
+            .then(response => response.text())
+            .then(data => divInfo.innerHTML = data);
+
+
+        @*// 透過XMLHttpRequest上傳圖檔
         // step1
         const xhr = new XMLHttpRequest();
 
         // step3
-        xhr.addEventListener("load", () => {            
+        xhr.addEventListener("load", () => {
             const data = xhr.responseText;
             divInfo.innerHTML = `<h3>${data}</h3>`;
         })
 
-        // step2        
-        xhr.open("POST", "@Url.Content("~/Api/Register")");        
-        xhr.send(formData);
+        // step2
+        xhr.open("POST", "@Url.Content("~/Api/Register")");
+        xhr.send(formData);*@
     })
-
-        fileName.addEventListener("change", () => {
-            var filename = this.value;
-            fileName.textContent = filename;
-        })
     </script>
 }
