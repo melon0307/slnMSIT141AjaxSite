@@ -48,8 +48,39 @@ namespace prjMSIT141AjaxSite.Controllers
                 file.CopyTo(fileStream); // 儲存檔案到uploads中
             }
 
-            string info = $"{file.FileName} - {file.ContentType} - {file.Length}";
+            // 將檔案寫進資料庫
+            byte[] imgByte = null;
+            using (var memoryStream = new MemoryStream())
+            {
+                file.CopyTo(memoryStream);
+                imgByte = memoryStream.ToArray();
+            }
+            member.FileName = file.FileName;
+            member.FileData = imgByte;
+
+            _context.Members.Add(member);
+            _context.SaveChanges();
+
+                string info = $"{file.FileName} - {file.ContentType} - {file.Length}";
             return Content(info, "text/plain", System.Text.Encoding.UTF8);
+        }
+
+        public IActionResult City()
+        {
+            var city = _context.Addresses.Select(c => c.City).Distinct();
+            return Json(city);
+        }
+
+        public IActionResult District(string city)
+        {
+            var district = _context.Addresses.Where(c => c.City == city).Select(d => d.SiteId);
+            return Json(district);
+        }
+
+        public IActionResult Roads(string district)
+        {
+            var roads = _context.Addresses.Where(d => d.SiteId == district).Select(r => r.Road);
+            return Json(roads);
         }
     }
 }
