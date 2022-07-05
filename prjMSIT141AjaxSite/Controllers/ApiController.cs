@@ -82,5 +82,12 @@ namespace prjMSIT141AjaxSite.Controllers
             var roads = _context.Addresses.Where(d => d.SiteId == district).Select(r => r.Road);
             return Json(roads);
         }
+
+        public IActionResult GetImageBytes(int id=1)
+        {
+            Member member = _context.Members.Find(id);
+            byte[] img = member.FileData;
+            return File(img, "image/jpeg");
+        }
     }
 }
