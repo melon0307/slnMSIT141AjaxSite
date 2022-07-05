@@ -1,4 +1,4 @@
-﻿
+﻿    
 @{
     ViewData["Title"] = "HW_Register";
 }
@@ -29,25 +29,28 @@
               divInfo = document.querySelector("#div1"),
               label = document.querySelector("#nameHelp");
 
-        txtName.addEventListener("blur", () => {
-            const formData = new FormData(document.userInfo),
+        txtName.addEventListener("blur", () => {            
                   xhr = new XMLHttpRequest();
 
             xhr.addEventListener("load", () => {
                 const data = xhr.responseText;
 
-                if (data == "True") {      
-                    if (txtName.value.trim() == "")
-                        label.innerHTML = "請輸入姓名!";
-                    else
+                if (txtName.value.trim() == "") {
+                    label.innerHTML = "請輸入姓名!";
+                }
+                else {
+                    if (data == "True")
+                        label.innerHTML = "此姓名已被註冊!";
+                    else 
                         label.innerHTML = "恭喜你，此姓名可以使用!";
                 }
-                else
-                    label.innerHTML = "此姓名已被註冊!";                                   
             })
-            
-            xhr.open("POST",'@Url.Content("~/Api/Register")');            
-            xhr.send(formData);
+
+            const params = `?name=${txtName.value}`,
+                  url = '@Url.Content("~/Api/CheckAccount")'; // 注:記得加上''
+
+            xhr.open("GET", url + params);            
+            xhr.send();
         })
 
     </script>
