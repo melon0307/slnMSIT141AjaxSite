@@ -33,7 +33,8 @@
 
         selCity.addEventListener('change', () => {
             //讀出使用者選擇的資料
-            
+            //console.log(selCity.options[selCity.selectedIndex].value)
+
             const xhr = new XMLHttpRequest();
             xhr.addEventListener("load", () => {
                 const datas = JSON.parse(xhr.responseText);
