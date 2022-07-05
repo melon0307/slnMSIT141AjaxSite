@@ -73,7 +73,7 @@ namespace prjMSIT141AjaxSite.Controllers
 
         public IActionResult District(string city)
         {
-            var district = _context.Addresses.Where(c => c.City == city).Select(d => d.SiteId);
+            var district = _context.Addresses.Where(c => c.City == city).Select(d => d.SiteId).Distinct();
             return Json(district);
         }
 
