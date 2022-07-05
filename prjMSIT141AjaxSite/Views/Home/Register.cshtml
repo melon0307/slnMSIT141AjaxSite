@@ -17,15 +17,21 @@
         <label for="txtage">Age</label>
         <input type="number" class="form-control col-md-3" id="txtage" name="age">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="custom-file ">        
+        <label class="custom-file-label col-md-3" for="customFile">選擇檔案</label>
+        <input type="file" class="custom-file-input col-md-3" id="customFile" name="file">
+    </div>
+    <hr />
+    <button type="submit" class="btn btn-primary">送出</button>
     <hr />
     <div id="div1" class="alert alert-secondary">
     </div>
 </form>
 @section Scripts{
     <script>
-    const btnSubmit = document.querySelector('.btn'),
-          divInfo = document.querySelector('#div1');
+        const btnSubmit = document.querySelector('.btn'),
+              divInfo = document.querySelector('#div1'),
+              fileName = document.querySelector(".custom-file-label");
 
     btnSubmit.addEventListener("click", (event) => {
         event.preventDefault(); // 停止預設行為 submit link
@@ -41,8 +47,13 @@
         })
 
         // step2        
-        xhr.open("POST", "@Url.Content("~/Api/Index")");        
+        xhr.open("POST", "@Url.Content("~/Api/Register")");        
         xhr.send(formData);
     })
+
+        fileName.addEventListener("change", () => {
+            var filename = this.value;
+            fileName.textContent = filename;
+        })
     </script>
 }
