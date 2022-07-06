@@ -69,5 +69,15 @@ namespace prjMSIT141AjaxSite.Controllers
         {
             return View();
         }
+
+        public IActionResult History()
+        {
+            return View();
+        }
+
+        public IActionResult JQuery()
+        {
+            return View();
+        }
     }
 }
