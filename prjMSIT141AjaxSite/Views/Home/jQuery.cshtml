@@ -16,18 +16,26 @@
 @section Scripts{
     <script>
         $('#buttonGet').click(function () {
-            $.get('@Url.Content("~/api/index")', { "name": "Jack", "age": 25 }, function (data) {
-                $('#divAlert').text(data);
+            $.get('@Url.Content("~/api/index")', { "name": "Jack", "age": 25 }, function (datas) {
+                $('#divAlert').text(datas);
             });
         });
+
         $('#buttonPost').click(function () {
-            $.post('@Url.Content("~/api/index")', { "name": "Mary", "age": 26 }, function (data) {
-                $('#divAlert').text(data);
+            $.post('@Url.Content("~/api/index")', { "name": "Mary", "age": 26 }, function (datas) {
+                $('#divAlert').text(datas);
             });
         });
+
         $('#buttonJson').click(function () {
-            $('#divAlert').text("JSON")
-        })
+            $.getJSON('@Url.Content("~/api/District")', { "city": "臺北市" }, function (datas) {
+                $.each(datas, function (idx, district) {
+                    console.log(district);
+                })
+                $('#divAlert').text(datas);
+            });
+        });
+
         $('#buttonLoad').click(function () {
             $('#divAlert').text("LOAD")
         })
