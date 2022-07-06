@@ -48,9 +48,18 @@
         });
         $('#divPartial').load('@Url.Content("~/home/partial")');
 
-        $('#buttonAjax').click(function () {
-            $('#divAlert').text("AJAX")
-        })
+        $('#buttonAjax').click(function () {            
+            $.ajax({
+                url: `@Url.Content("~/api/district")`,
+                type: "GET",
+                data: { "city": "臺北市" },
+                dataType: "json"
+            }).done((datas) => {
+                console.log(datas);
+                $('#divAlert').text(datas)
+            });            
+        });
+
         $('#buttonCors').click(function () {
             $('#divAlert').text("CORs")
         })
