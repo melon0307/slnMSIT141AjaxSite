@@ -61,6 +61,10 @@
         });
 
         $('#buttonCors').click(function () {
+            const api = "https://localhost:44364/api/Shippers";
+            $.getJSON(api, function (datas) {
+                console.log(datas);
+            })
             $('#divAlert').text("CORs")
         })
 
