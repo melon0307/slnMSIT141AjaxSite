@@ -84,5 +84,11 @@ namespace prjMSIT141AjaxSite.Controllers
         {
             return View();
         }
+
+        public IActionResult Partial()
+        {
+            ViewBag.data = "Hello Partial!";
+            return PartialView();
+        }
     }
 }

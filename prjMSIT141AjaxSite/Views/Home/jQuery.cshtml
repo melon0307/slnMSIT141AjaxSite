@@ -4,6 +4,7 @@
 }
 
 <h1>jQuery</h1>
+@Html.Partial("Partial")
 <button id="buttonGet" class="btn btn-primary">get</button>
 <button id="buttonPost" class="btn btn-secondary">post</button>
 <button id="buttonJson" class="btn btn-success">getJson</button>
@@ -37,8 +38,9 @@
         });
 
         $('#buttonLoad').click(function () {
-            $('#divAlert').text("LOAD")
-        })
+            $('#divAlert').load('@Url.Content("~/home/partial")');
+        });
+
         $('#buttonAjax').click(function () {
             $('#divAlert').text("AJAX")
         })
