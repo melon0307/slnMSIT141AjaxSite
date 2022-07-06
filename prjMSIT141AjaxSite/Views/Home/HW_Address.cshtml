@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewData["Title"] = "HW_Address";
+}
+
+<h1>HW_Address</h1>
+<select id="select1">
+</select>
+<select id="select2">
+</select>
+<select id="select3">
+</select>
+
+@section Scripts{
+    <script>
+    const selCity = document.querySelector('#select1'),
+          selDistrict = document.querySelector('#select2'),
+          selRoads = document.querySelector('#select3');
+
+        //================fetch()===============
+        @*// 載入城市
+        fetch('@Url.Content("~/api/city")')
+            .then(response => {
+                return response.json();
+            })
+            .then(datas => {
+                datas.forEach((city) => {
+                    const opt = new Option(city, city);
+                    selCity.options.add(opt);
+                });
+            });
+
+        // 載入地區
+        selCity.addEventListener("change", () => {
+            selDistrict.innerHTML = "";
+            let url = '@Url.Content("~/api/district")',
+                params = `?city=${selCity.options[selCity.selectedIndex].value}`;
+
+            fetch(url + params)
+                .then(response => {
+                    return response.json();
+                })
+                .then(datas => {
+                    datas.forEach((district) => {
+                        const opt = new Option(district, district);
+                        selDistrict.options.add(opt);
+                    });
+                });
+        });
+
+        // 載入路名
+        selDistrict.addEventListener("change", () => {
+            selRoads.innerHTML = "";
+            let url = `@Url.Content("~/api/Roads")`,
+                params = `?district=${selDistrict.options[selDistrict.selectedIndex].value}`;
+
+            fetch(url + params)
+                .then(response => {
+                    return response.json();
+                })
+                .then(datas => {
+                    datas.forEach((road) => {
+                        const opt = new Option(road, road);
+                        selRoads.options.add(opt);
+                    });
+                });
+        });*@
+
+        //================async await===============
+        LoadCities();
+        selCity.addEventListener("change", LoadDistricts);
+        selDistrict.addEventListener("change", LoadRoads);
+
+        async function LoadCities() {
+            const response = await fetch('@Url.Content("~/api/city")'),
+                  datas = await response.json();
+            datas.forEach(city => {
+                let opt = new Option(city, city);
+                selCity.options.add(opt);
+            });
+            LoadDistricts();
+        }
+
+        async function LoadDistricts() {
+            const response = await fetch('@Url.Content("~/api/district")' + `?city=${selCity.options[selCity.selectedIndex].value}`),
+                  datas = await response.json();
+            datas.forEach(district => {
+                let opt = new Option(district, district);
+                selDistrict.options.add(opt);
+            });
+            LoadRoads();
+        }
+
+        async function LoadRoads() {
+            const response = await fetch('@Url.Content("~/api/Roads")' + `?district=${selDistrict.options[selDistrict.selectedIndex].value}`),
+                  datas = await response.json();
+            datas.forEach(road => {
+                let opt = new Option(road, road);
+                selRoads.options.add(opt);
+            });
+        }
+    </script>
+
+}
